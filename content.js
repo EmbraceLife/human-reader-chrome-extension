@@ -49,8 +49,50 @@ const fetchResponse = async () => {
     ? storage.selectedVoiceId
     : "21m00Tcm4TlvDq8ikWAM"; //fallback Voice ID
   const mode = storage.mode
-  const model_id =
-    (mode === "englishfast" || mode === "eleven_turbo_v2") ? "eleven_turbo_v2" :
+              const model_id =
+    (mode === "eleven_v3_(alpha)" || mode === "eleven_v3") ? "eleven_v3" :
+    (mode === "eleven_multilingual_v2" || mode === "eleven_multilingual_v2") ? "eleven_multilingual_v2" :
+    (mode === "eleven_flash_v2.5" || mode === "eleven_flash_v2_5") ? "eleven_flash_v2_5" :
+    (mode === "eleven_turbo_v2.5" || mode === "eleven_turbo_v2_5") ? "eleven_turbo_v2_5" :
+    (mode === "eleven_turbo_v2" || mode === "eleven_turbo_v2") ? "eleven_turbo_v2" :
+    (mode === "eleven_flash_v2" || mode === "eleven_flash_v2") ? "eleven_flash_v2" :
+    (mode === "eleven_english_v1" || mode === "eleven_monolingual_v1") ? "eleven_monolingual_v1" :
+    "eleven_multilingual_v1"; // default
+    (mode === "eleven_multilingual_v2" || mode === "eleven_multilingual_v2") ? "eleven_multilingual_v2" :
+    (mode === "eleven_flash_v2.5" || mode === "eleven_flash_v2_5") ? "eleven_flash_v2_5" :
+    (mode === "eleven_turbo_v2.5" || mode === "eleven_turbo_v2_5") ? "eleven_turbo_v2_5" :
+    (mode === "eleven_turbo_v2" || mode === "eleven_turbo_v2") ? "eleven_turbo_v2" :
+    (mode === "eleven_flash_v2" || mode === "eleven_flash_v2") ? "eleven_flash_v2" :
+    (mode === "eleven_multilingual_v1" || mode === "eleven_multilingual_v1") ? "eleven_multilingual_v1" :
+    "eleven_monolingual_v1"; // default
+    (mode === "eleven_multilingual_v2" || mode === "eleven_multilingual_v2") ? "eleven_multilingual_v2" :
+    (mode === "eleven_flash_v2.5" || mode === "eleven_flash_v2_5") ? "eleven_flash_v2_5" :
+    (mode === "eleven_turbo_v2.5" || mode === "eleven_turbo_v2_5") ? "eleven_turbo_v2_5" :
+    (mode === "eleven_turbo_v2" || mode === "eleven_turbo_v2") ? "eleven_turbo_v2" :
+    (mode === "eleven_flash_v2" || mode === "eleven_flash_v2") ? "eleven_flash_v2" :
+    (mode === "eleven_english_v1" || mode === "eleven_monolingual_v1") ? "eleven_monolingual_v1" :
+    "eleven_multilingual_v1"; // default
+    (mode === "eleven_multilingual_v2" || mode === "eleven_multilingual_v2") ? "eleven_multilingual_v2" :
+    (mode === "eleven_flash_v2.5" || mode === "eleven_flash_v2_5") ? "eleven_flash_v2_5" :
+    (mode === "eleven_turbo_v2.5" || mode === "eleven_turbo_v2_5") ? "eleven_turbo_v2_5" :
+    (mode === "eleven_turbo_v2" || mode === "eleven_turbo_v2") ? "eleven_turbo_v2" :
+    (mode === "eleven_flash_v2" || mode === "eleven_flash_v2") ? "eleven_flash_v2" :
+    (mode === "eleven_multilingual_v1" || mode === "eleven_multilingual_v1") ? "eleven_multilingual_v1" :
+    "eleven_monolingual_v1"; // default
+    (mode === "eleven_multilingual_v2" || mode === "eleven_multilingual_v2") ? "eleven_multilingual_v2" :
+    (mode === "eleven_flash_v2.5" || mode === "eleven_flash_v2_5") ? "eleven_flash_v2_5" :
+    (mode === "eleven_turbo_v2.5" || mode === "eleven_turbo_v2_5") ? "eleven_turbo_v2_5" :
+    (mode === "eleven_turbo_v2" || mode === "eleven_turbo_v2") ? "eleven_turbo_v2" :
+    (mode === "eleven_flash_v2" || mode === "eleven_flash_v2") ? "eleven_flash_v2" :
+    (mode === "eleven_multilingual_v1" || mode === "eleven_multilingual_v1") ? "eleven_multilingual_v1" :
+    "eleven_monolingual_v1"; // default
+    (mode === "eleven_multilingual_v2" || mode === "eleven_multilingual_v2") ? "eleven_multilingual_v2" :
+    (mode === "eleven_flash_v2.5" || mode === "eleven_flash_v2_5") ? "eleven_flash_v2_5" :
+    (mode === "eleven_turbo_v2.5" || mode === "eleven_turbo_v2_5") ? "eleven_turbo_v2_5" :
+    (mode === "eleven_turbo_v2" || mode === "eleven_turbo_v2") ? "eleven_turbo_v2" :
+    (mode === "eleven_flash_v2" || mode === "eleven_flash_v2") ? "eleven_flash_v2" :
+    (mode === "eleven_english_v1" || mode === "eleven_monolingual_v1") ? "eleven_monolingual_v1" :
+    "eleven_multilingual_v1"; // default
       (mode === "multilingual" || mode === "eleven_multilingual_v2") ? "eleven_multilingual_v2" :
         "eleven_turbo_v2_5";
 
