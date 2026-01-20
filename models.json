@@ -742,21 +742,6 @@
     "can_do_voice_conversion": false
   },
   {
-    "model_id": "eleven_monolingual_v1",
-    "name": "Eleven English v1",
-    "description": "Our first ever text to speech model. Now outclassed by Multilingual v2 (for content creation) and Turbo v2.5 (for low latency use cases).",
-    "can_be_finetuned": false,
-    "token_cost_factor": 1.0,
-    "languages": [
-      {
-        "language_id": "en",
-        "name": "English"
-      }
-    ],
-    "can_do_text_to_speech": true,
-    "can_do_voice_conversion": false
-  },
-  {
     "model_id": "eleven_multilingual_v1",
     "name": "Eleven Multilingual v1",
     "description": "Our first Multilingual model, capability of generating speech in 10 languages. Now outclassed by Multilingual v2 (for content creation) and Turbo v2.5 (for low latency use cases).",
@@ -798,6 +783,21 @@
       {
         "language_id": "ar",
         "name": "Arabic"
+      }
+    ],
+    "can_do_text_to_speech": true,
+    "can_do_voice_conversion": false
+  },
+  {
+    "model_id": "eleven_monolingual_v1",
+    "name": "Eleven English v1",
+    "description": "Our first ever text to speech model. Now outclassed by Multilingual v2 (for content creation) and Turbo v2.5 (for low latency use cases).",
+    "can_be_finetuned": false,
+    "token_cost_factor": 1.0,
+    "languages": [
+      {
+        "language_id": "en",
+        "name": "English"
       }
     ],
     "can_do_text_to_speech": true,

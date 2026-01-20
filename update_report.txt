@@ -1,6 +1,6 @@
 === ElevenLabs Extension Update Report ===
 
-Date: 2026-01-18 08:11:21
+Date: 2026-01-19 20:05:45
 Models found: 8
 Voices found: 20
 
@@ -29,18 +29,18 @@ Voices found: 20
   Description: Our ultra low latency model in english. Ideal for conversational use cases.
   Languages: en: English  Token cost: 1.0x
 
-- Eleven English v1 (eleven_monolingual_v1)
-  Description: Our first ever text to speech model. Now outclassed by Multilingual v2 (for content creation) and Turbo v2.5 (for low latency use cases).
-  Languages: en: English  Token cost: 1.0x
-
 - Eleven Multilingual v1 (eleven_multilingual_v1)
   Description: Our first Multilingual model, capability of generating speech in 10 languages. Now outclassed by Multilingual v2 (for content creation) and Turbo v2.5 (for low latency use cases).
   Languages: en: English, de: German, pl: Polish, es: Spanish, it: Italian, fr: French, pt: Portuguese, hi: Hindi, ar: Arabic  Token cost: 1.0x
+
+- Eleven English v1 (eleven_monolingual_v1)
+  Description: Our first ever text to speech model. Now outclassed by Multilingual v2 (for content creation) and Turbo v2.5 (for low latency use cases).
+  Languages: en: English  Token cost: 1.0x
 
 
 === Subscription Info ===
 Tier: free
 Character limit: 10000
-Character count: 0
+Character count: 300
 Can use instant voice cloning: False
 Can use professional voice cloning: False
