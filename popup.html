@@ -15,6 +15,7 @@
         <select id="provider">
           <option value="elevenlabs">ElevenLabs</option>
           <option value="openai">OpenAI</option>
+          <option value="minimax">Minimax</option>
         </select>
       </div>
     </div>
@@ -83,6 +84,47 @@
           </p>
         </div>
       </div>
+
+      <!-- Minimax Settings -->
+      <div id="settingsMinimax" style="display: none">
+        <div class="settingsItem">
+          <label for="minimaxVoice">Voice:</label>
+          <select id="minimaxVoice">
+            <option value="Wise_Woman">Wise Woman</option>
+            <option value="Friendly_Person">Friendly Person</option>
+            <option value="Inspirational_girl">Inspirational Girl</option>
+            <option value="Deep_Voice_Man">Deep Voice Man</option>
+            <option value="Calm_Woman">Calm Woman</option>
+            <option value="Casual_Guy">Casual Guy</option>
+            <option value="Lively_Girl">Lively Girl</option>
+            <option value="Patient_Man">Patient Man</option>
+            <option value="Young_Knight">Young Knight</option>
+            <option value="Determined_Man">Determined Man</option>
+            <option value="Lovely_Girl">Lovely Girl</option>
+            <option value="Decent_Boy">Decent Boy</option>
+            <option value="Imposing_Manner">Imposing Manner</option>
+            <option value="Gentle_Woman">Gentle Woman</option>
+            <option value="Affectionate_Girl">Affectionate Girl</option>
+          </select>
+        </div>
+        <div class="settingsItemNoPadding">
+          <label for="minimaxModel">Model:</label>
+          <select id="minimaxModel">
+            <option value="speech-2.8-hd">speech-2.8-hd (Best quality)</option>
+            <option value="speech-2.8-turbo">speech-2.8-turbo (Faster)</option>
+            <option value="speech-2.6-hd">speech-2.6-hd (Low latency)</option>
+            <option value="speech-2.6-turbo">speech-2.6-turbo (Fast + cheap)</option>
+            <option value="speech-02-hd">speech-02-hd (Superior rhythm)</option>
+            <option value="speech-02-turbo">speech-02-turbo (Multilingual)</option>
+          </select>
+        </div>
+        <div class="settingsItemNoPadding">
+          <p>
+            See <a href="https://platform.minimax.io/docs/api-reference/speech-t2a-http" target="_blank">Minimax TTS docs</a> for voice samples and details.
+          </p>
+        </div>
+      </div>
+
       <!-- Speed (shared) -->
       <div class="settingsItem">
         <label for="speed">Speed:</label>
@@ -167,6 +209,32 @@
           <label for="openaiApiKey">API Key:</label>
           <input type="text" id="openaiApiKey" />
           <button id="setOpenaiApiKey">Set</button>
+        </div>
+      </div>
+
+      <!-- Minimax Welcome -->
+      <div id="welcomeMinimax" class="welcome" style="display: none">
+        <div class="welcomeTitle">Welcome to Human Reader!</div>
+        <div class="welcomeDescription">
+          <p>To get started, you'll need a Minimax API key:</p>
+          <ul>
+            <li>
+              Create an account (or log in) on
+              <a href="https://platform.minimax.io" target="_blank"
+                >platform.minimax.io</a
+              >
+            </li>
+            <li>
+              Go to <a href="https://platform.minimax.io/user-center/basic-information/interface-key" target="_blank">API keys</a> and create a new key
+            </li>
+            <li>Paste the API key into the input field below</li>
+            <li>Click "Set" to get started</li>
+          </ul>
+        </div>
+        <div class="welcomeInput">
+          <label for="minimaxApiKey">API Key:</label>
+          <input type="text" id="minimaxApiKey" />
+          <button id="setMinimaxApiKey">Set</button>
         </div>
       </div>
     </div>

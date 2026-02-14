@@ -48,12 +48,15 @@ const readStorage = async (keys) => {
 const fetchResponse = async () => {
   const storage = await readStorage([
     "apiKey", "selectedVoiceId", "mode", "provider", 
-    "openaiApiKey", "openaiVoice", "openaiModel"
+    "openaiApiKey", "openaiVoice", "openaiModel",
+    "minimaxApiKey", "minimaxVoice", "minimaxModel"
   ]);
   const provider = storage.provider || "elevenlabs";
 
   if (provider === "openai") {
     return fetchOpenAIResponse(storage);
+  } else if (provider === "minimax") {
+    return fetchMinimaxResponse(storage);
   } else {
     return fetchElevenLabsResponse(storage);
   }
@@ -131,11 +134,54 @@ const fetchElevenLabsResponse = async (storage) => {
   return response;
 };
 
+// Minimax TTS - calls background.js to avoid CORS issues
+const fetchMinimaxResponse = async (storage) => {
+  const voice = storage.minimaxVoice || "Wise_Woman";
+  const model = storage.minimaxModel || "speech-2.8-hd";
+  
+  // Send message to background script (has full API permissions)
+  const result = await chrome.runtime.sendMessage({
+    action: "minimaxTTS",
+    text: textToPlay,
+    voice: voice,
+    model: model,
+    apiKey: storage.minimaxApiKey,
+  });
+  
+  if (result.error) {
+    throw new Error(result.error);
+  }
+  
+  // Convert hex string to bytes
+  const hexAudio = result.hexAudio;
+  const bytes = new Uint8Array(hexAudio.length / 2);
+  for (let i = 0; i < hexAudio.length; i += 2) {
+    bytes[i / 2] = parseInt(hexAudio.substr(i, 2), 16);
+  }
+  
+  // Create a fake response with body stream to match other providers
+  const blob = new Blob([bytes], { type: "audio/mpeg" });
+  
+  const stream = new ReadableStream({
+    start(controller) {
+      controller.enqueue(bytes);
+      controller.close();
+    }
+  });
+  
+  return {
+    ok: true,
+    body: stream,
+    blob: async () => blob,
+  };
+};
+
 
 const handleMissingApiKey = async () => {
   const storage = await readStorage(["provider"]);
   const provider = storage.provider || "elevenlabs";
-  const providerName = provider === "openai" ? "OpenAI" : "ElevenLabs";
+  const providerName = provider === "openai" ? "OpenAI" : 
+                       provider === "minimax" ? "Minimax" : "ElevenLabs";
   
   setButtonState("speak");
   const audio = new Audio(chrome.runtime.getURL("media/error-no-api-key.mp3"));
@@ -157,9 +203,10 @@ const stopAudio = () => {
 };
 
 const streamAudio = async () => {
-  const storage = await readStorage(["apiKey", "speed", "provider", "openaiApiKey"]);
+  const storage = await readStorage(["apiKey", "speed", "provider", "openaiApiKey", "minimaxApiKey"]);
   const provider = storage.provider || "elevenlabs";
-  const hasApiKey = provider === "openai" ? storage.openaiApiKey : storage.apiKey;
+  const hasApiKey = provider === "openai" ? storage.openaiApiKey : 
+                    provider === "minimax" ? storage.minimaxApiKey : storage.apiKey;
   
   if (!hasApiKey) {
     handleMissingApiKey();

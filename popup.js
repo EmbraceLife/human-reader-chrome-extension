@@ -39,20 +39,31 @@ const updateProviderUI = (provider) => {
   // Welcome screens
   const welcomeElevenlabs = document.getElementById("welcomeElevenlabs");
   const welcomeOpenai = document.getElementById("welcomeOpenai");
+  const welcomeMinimax = document.getElementById("welcomeMinimax");
   // Settings screens
   const settingsElevenlabs = document.getElementById("settingsElevenlabs");
   const settingsOpenai = document.getElementById("settingsOpenai");
+  const settingsMinimax = document.getElementById("settingsMinimax");
   
+  // Hide all first
+  if (welcomeElevenlabs) welcomeElevenlabs.style.display = "none";
+  if (welcomeOpenai) welcomeOpenai.style.display = "none";
+  if (welcomeMinimax) welcomeMinimax.style.display = "none";
+  if (settingsElevenlabs) settingsElevenlabs.style.display = "none";
+  if (settingsOpenai) settingsOpenai.style.display = "none";
+  if (settingsMinimax) settingsMinimax.style.display = "none";
+  
+  // Show selected provider
   if (provider === "openai") {
-    if (welcomeElevenlabs) welcomeElevenlabs.style.display = "none";
     if (welcomeOpenai) welcomeOpenai.style.display = "block";
-    if (settingsElevenlabs) settingsElevenlabs.style.display = "none";
     if (settingsOpenai) settingsOpenai.style.display = "block";
+  } else if (provider === "minimax") {
+    if (welcomeMinimax) welcomeMinimax.style.display = "block";
+    if (settingsMinimax) settingsMinimax.style.display = "block";
   } else {
+    // Default: elevenlabs
     if (welcomeElevenlabs) welcomeElevenlabs.style.display = "block";
-    if (welcomeOpenai) welcomeOpenai.style.display = "none";
     if (settingsElevenlabs) settingsElevenlabs.style.display = "block";
-    if (settingsOpenai) settingsOpenai.style.display = "none";
   }
 };
 
@@ -65,15 +76,18 @@ const setSettingsScreen = async () => {
   info.style.display = "block";
 
   //assumes storage is already set
-  const storage = await readStorage(["mode", "speed", "provider", "openaiVoice", "openaiModel"]);
+  const storage = await readStorage(["mode", "speed", "provider", "openaiVoice", "openaiModel", "minimaxVoice", "minimaxModel"]);
   const provider = storage.provider || "elevenlabs";
   updateProviderUI(provider);
   
   if (provider === "elevenlabs") {
     document.getElementById("mode").value = storage.mode || "eleven_turbo_v2_5";
-  } else {
+  } else if (provider === "openai") {
     document.getElementById("openaiVoice").value = storage.openaiVoice || "alloy";
     document.getElementById("openaiModel").value = storage.openaiModel || "gpt-4o-mini-tts";
+  } else if (provider === "minimax") {
+    document.getElementById("minimaxVoice").value = storage.minimaxVoice || "Wise_Woman";
+    document.getElementById("minimaxModel").value = storage.minimaxModel || "speech-2.8-hd";
   }
   setSpeedValue(storage.speed || 1);
 };
@@ -171,13 +185,15 @@ const fetchVoices = async () => {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const storage = await readStorage(["apiKey", "openaiApiKey", "provider"]);
+  const storage = await readStorage(["apiKey", "openaiApiKey", "minimaxApiKey", "provider"]);
   const provider = storage.provider || "elevenlabs";
   
   if (provider === "elevenlabs" && storage.apiKey) {
     populateVoices();
     setSettingsScreen();
   } else if (provider === "openai" && storage.openaiApiKey) {
+    setSettingsScreen();
+  } else if (provider === "minimax" && storage.minimaxApiKey) {
     setSettingsScreen();
   } else {
     setWelcomeScreen();
@@ -293,4 +309,56 @@ document.getElementById("openaiVoice").addEventListener("change", async () => {
 document.getElementById("openaiModel").addEventListener("change", async () => {
   const model = document.getElementById("openaiModel").value;
   await setStorageItem("openaiModel", model);
+});
+
+// Minimax API key validation
+const setMinimaxAPIKey = async (apiKey) => {
+  // Test the API key with a minimal TTS request
+  const response = await fetch("https://api.minimax.io/v1/t2a_v2", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "speech-2.8-hd",
+      text: "test",
+      voice_setting: { voice_id: "Wise_Woman", speed: 1, vol: 1 },
+      audio_setting: { format: "mp3" },
+    }),
+  });
+  if (response.ok) {
+    await setStorageItem("minimaxApiKey", apiKey);
+  } else {
+    throw new Error("API request failed");
+  }
+};
+
+document.getElementById("setMinimaxApiKey").addEventListener("click", async () => {
+  const button = document.getElementById("setMinimaxApiKey");
+  const inputValue = document.getElementById("minimaxApiKey").value;
+  button.textContent = "...";
+  try {
+    await setMinimaxAPIKey(inputValue);
+    await setStorageItem("provider", "minimax");
+    await setStorageItem("minimaxVoice", "Wise_Woman");
+    await setSettingsScreen();
+    button.textContent = "Set";
+  } catch (error) {
+    console.log(error);
+    button.textContent = "Set";
+    alert("Invalid API key, please try again.");
+    console.error(error);
+  }
+});
+
+// Minimax voice change
+document.getElementById("minimaxVoice").addEventListener("change", async () => {
+  const voice = document.getElementById("minimaxVoice").value;
+  await setStorageItem("minimaxVoice", voice);
+});
+
+document.getElementById("minimaxModel").addEventListener("change", async () => {
+  const model = document.getElementById("minimaxModel").value;
+  await setStorageItem("minimaxModel", model);
 });

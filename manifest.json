@@ -25,7 +25,8 @@
   ],
   "host_permissions": [
      "https://api.elevenlabs.io/*",
-     "https://api.openai.com/*"
+     "https://api.openai.com/*",
+     "https://api.minimax.io/*"
   ],
   "web_accessible_resources": [
     {
