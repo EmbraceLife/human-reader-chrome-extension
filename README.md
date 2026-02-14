@@ -11,6 +11,14 @@ Check out the demo here:
 ## **Changelog:**
 
 
+### Version 1.9 - Minimax TTS Support
+New features:
+- Added **Minimax** as a third TTS provider (alongside ElevenLabs and OpenAI)
+- Added model dropdown for Minimax (speech-2.8-hd, speech-2.8-turbo, etc.)
+- Added voice selection dropdown with 15 Minimax voices
+
+**⚠️ Note:** After changing the model or voice in settings, you must **refresh the web page** where you want to use text-to-speech for the changes to take effect.
+
 ### Version 1.6 -  [PR](https://github.com/sebhs/human-reader-chrome-extension/pull/31)
 New features: 
 - Allowing users to stop audio from playing
